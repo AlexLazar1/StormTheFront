@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{CEEA4C6E-4133-51EF-C3CD-E78B2E7C201D}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Models/Castle.cs">
     <Files>
-      <File FileName="Assets/MenuScript.cs" Line="41" Column="1" />
+      <File FileName="Assets/MenuScript.cs" Line="60" Column="21" />
       <File FileName="Assets/SqlOpen.cs" Line="13" Column="7" />
-      <File FileName="Assets/Models/Hero.cs" Line="43" Column="42" />
-      <File FileName="Assets/Models/Castle.cs" Line="7" Column="2" />
+      <File FileName="Assets/Models/Hero.cs" Line="19" Column="1" />
+      <File FileName="Assets/Models/Castle.cs" Line="22" Column="60" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
