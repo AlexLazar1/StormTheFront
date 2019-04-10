@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\MenuScript.cs" />
+    <Compile Include="Assets\Models\Castle.cs" />
+    <Compile Include="Assets\Models\Hero.cs" />
     <Compile Include="Assets\SqlOpen.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/cristianion/Unity/StormTheFront/STf/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
