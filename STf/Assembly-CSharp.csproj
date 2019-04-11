@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Controllers\BattleController.cs" />
     <Compile Include="Assets\Controllers\EnemyController.cs" />
     <Compile Include="Assets\Controllers\PlayerController.cs" />
     <Compile Include="Assets\MenuScript.cs" />
