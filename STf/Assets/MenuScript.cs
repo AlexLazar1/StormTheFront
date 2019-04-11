@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
@@ -49,7 +50,7 @@ public class MenuScript : MonoBehaviour
             int castleId = playerCaste.SaveInDb();
             if(castleId != 0)
             {
-                //ok
+                SceneManager.LoadScene("MainSceneIG");
             }
             else
             {
