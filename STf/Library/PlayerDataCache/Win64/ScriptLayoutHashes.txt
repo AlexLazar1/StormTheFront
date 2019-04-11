@@ -1,9 +1,10 @@
 Win64
 PlayerPath?
-/Users/cristianion/Unity/StormTheFront/STf/stf/STf.exe
+/Users/cristianion/Unity/StormTheFront/STf/stf/stf/STf.exe
 SceneListBegin?
 Assets/Scenes/Menu.unity
 Assets/Scenes/MainSceneIG.unity
+Assets/Scenes/BattleScene.unity
 SceneListEnd?
 984dcc0ba3707b7691fbdca8ff508d28 Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
 01aa15e337e3a9c62f15153dfac6d589 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
@@ -160,3 +161,4 @@ c6666661329916e218bee7f5e79e60f5 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 3165968ba45c74472d279ba04455fccb Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 8649814970b42d345b89944b862453cc Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
 459b50185a167c1d210a783633c72823 Assembly-CSharp.dll:.PlayerController
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.EnemyController

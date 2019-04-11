@@ -34,5 +34,12 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Castle1");
         }
+        if (collision.gameObject.name.Equals("enemy1"))
+        {
+            EnemyController.StartBattle(1);
+        } else if(collision.gameObject.name.Equals("enemy2"))
+        {
+            EnemyController.StartBattle(2);
+        }
     }
 }
