@@ -7,8 +7,8 @@
       <File FileName="Assets/Models/Castle.cs" Line="22" Column="60" />
       <File FileName="Assets/Controllers/PlayerController.cs" Line="40" Column="59" />
       <File FileName="Assets/Controllers/EnemyController.cs" Line="10" Column="1" />
-      <File FileName="Assets/Controllers/BattleController.cs" Line="33" Column="41" />
-      <File FileName="Assets/Models/Cell.cs" Line="4" Column="19" />
+      <File FileName="Assets/Controllers/BattleController.cs" Line="18" Column="31" />
+      <File FileName="Assets/Models/Cell.cs" Line="8" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
