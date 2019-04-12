@@ -1,4 +1,4 @@
-﻿<Properties StartupConfiguration="{CEEA4C6E-4133-51EF-C3CD-E78B2E7C201D}|">
+﻿<Properties>
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Controllers/BattleController.cs">
     <Files>
       <File FileName="Assets/MenuScript.cs" Line="53" Column="55" />
@@ -7,12 +7,13 @@
       <File FileName="Assets/Models/Castle.cs" Line="22" Column="60" />
       <File FileName="Assets/Controllers/PlayerController.cs" Line="40" Column="59" />
       <File FileName="Assets/Controllers/EnemyController.cs" Line="10" Column="1" />
-      <File FileName="Assets/Controllers/BattleController.cs" Line="29" Column="10" />
+      <File FileName="Assets/Controllers/BattleController.cs" Line="33" Column="41" />
+      <File FileName="Assets/Models/Cell.cs" Line="4" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="461145d8-876e-4c3f-b51d-ed3abcdcab37" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a0913341-1407-4a98-a11b-226cfa0195af" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
