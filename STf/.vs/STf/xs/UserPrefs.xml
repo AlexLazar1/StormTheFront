@@ -1,19 +1,12 @@
-﻿<Properties>
+﻿<Properties StartupConfiguration="{CEEA4C6E-4133-51EF-C3CD-E78B2E7C201D}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Controllers/BattleController.cs">
     <Files>
-      <File FileName="Assets/MenuScript.cs" Line="53" Column="55" />
-      <File FileName="Assets/SqlOpen.cs" Line="13" Column="7" />
-      <File FileName="Assets/Models/Hero.cs" Line="19" Column="1" />
-      <File FileName="Assets/Models/Castle.cs" Line="22" Column="60" />
-      <File FileName="Assets/Controllers/PlayerController.cs" Line="40" Column="59" />
-      <File FileName="Assets/Controllers/EnemyController.cs" Line="10" Column="1" />
-      <File FileName="Assets/Controllers/BattleController.cs" Line="18" Column="31" />
-      <File FileName="Assets/Models/Cell.cs" Line="8" Column="19" />
+      <File FileName="Assets/Controllers/BattleController.cs" Line="83" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a0913341-1407-4a98-a11b-226cfa0195af" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="199850b2-9bcb-4a99-a0c4-31cf120c15fe" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -39,6 +39,9 @@ public class MenuScript : MonoBehaviour
         Debug.Log(id);
         if(id != 0)
         {
+            player.id = id;
+            Global.Player = player;
+
             Castle playerCaste = new Castle
             {
                 HeroId = id,

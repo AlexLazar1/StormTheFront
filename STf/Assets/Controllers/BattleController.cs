@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
@@ -9,7 +10,12 @@ public class BattleController : MonoBehaviour
     //public Board board;
     //public Tilemap m_level;
     public GameObject Board;
+    public Sprite selected;
+    public Sprite unselected;
+    public Text dialog;
+    private SpriteRenderer spriteRenderer;
     private Cell[,] cellsGame;
+    private Hero hero1, hero2;
 
 
     public static Cell[,] GetAllChilds(GameObject Go)
@@ -32,17 +38,11 @@ public class BattleController : MonoBehaviour
             {
                 x = x,
                 y = y,
-                go = cellObject
+                go = cellObject,
+                selected = false,
+                walkable = true,
             };
             y++;
-            /*cells[x,y].go.AddComponent(typeof(EventTrigger));
-            EventTrigger trigger = cells[x,y].go.GetComponent<EventTrigger>();
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.PointerClick;
-            entry.callback.AddListener((eventData) => {
-                Debug.Log("test");
-            });
-            trigger.triggers.Add(entry);*/
         }
         return cells;
     }
@@ -51,10 +51,11 @@ public class BattleController : MonoBehaviour
     void Start()
     {
         cellsGame = GetAllChilds(Board);
+        LoadHeroes();
 
     }
 
-    private Cell findCell(GameObject obj)
+    private Cell FindCell(GameObject obj)
     {
         foreach (Cell cell in cellsGame)
         { 
@@ -65,6 +66,33 @@ public class BattleController : MonoBehaviour
         }
         return null;
     }
+    private void UnselectAllCells()
+    {
+        foreach(Cell cell in cellsGame)
+        {
+            cell.selected = false;
+            spriteRenderer = cell.go.GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = unselected;
+        }
+
+    }
+
+    public void LoadHeroes()
+    {
+        hero1 = Hero.GetPlayer(Global.Player.id);
+        //hero1.printHero();
+        hero2 = Global.Enemy;
+        //hero2.printHero();
+        dialog.text = string.Format("{0}: Prepare to die, {1}!",hero1.Name,hero2.Name);
+        Invoke("ClearDialog", 3.0f);
+
+    }
+    void ClearDialog()
+    {
+        dialog.text = "";
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -76,8 +104,17 @@ public class BattleController : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
             if (hit.collider != null)
             {
-                Cell cell = findCell(hit.collider.gameObject);
+                Cell cell = FindCell(hit.collider.gameObject);
                 Debug.Log(cell.x + "-" + cell.y);
+                if (cell.selected == true || cell.walkable == false)
+                {
+                    Debug.Log("selected");
+                    return;
+                }
+                UnselectAllCells();
+                spriteRenderer = cell.go.GetComponent<SpriteRenderer>();
+                spriteRenderer.sprite = selected;
+                cell.selected = true;
 
             }
         }
