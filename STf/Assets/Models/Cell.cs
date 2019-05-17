@@ -11,6 +11,7 @@ public class Cell
     public int x { get; set; }
     public int y { get; set; }
     public GameObject go { get; set; }
+    public GameObject troop { get; set; }
     public Boolean selected { get; set; }
 
     public void Update()

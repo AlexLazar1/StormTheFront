@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{CEEA4C6E-4133-51EF-C3CD-E78B2E7C201D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Controllers/BattleController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Models/Cell.cs">
     <Files>
-      <File FileName="Assets/Controllers/BattleController.cs" Line="83" Column="24" />
+      <File FileName="Assets/Controllers/BattleController.cs" Line="84" Column="69" />
+      <File FileName="Assets/Models/Cell.cs" Line="15" Column="42" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="199850b2-9bcb-4a99-a0c4-31cf120c15fe" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="97451a6e-1bd3-4556-af2a-810487f64966" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

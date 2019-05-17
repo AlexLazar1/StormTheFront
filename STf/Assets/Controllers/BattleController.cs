@@ -12,10 +12,13 @@ public class BattleController : MonoBehaviour
     public GameObject Board;
     public Sprite selected;
     public Sprite unselected;
+    public Sprite knight;
     public Text dialog;
     private SpriteRenderer spriteRenderer;
     private Cell[,] cellsGame;
     private Hero hero1, hero2;
+    private bool IsSpriteSelected = false;
+    private Cell LastSelectedCell = null;
 
 
     public static Cell[,] GetAllChilds(GameObject Go)
@@ -51,9 +54,39 @@ public class BattleController : MonoBehaviour
     void Start()
     {
         cellsGame = GetAllChilds(Board);
-        LoadHeroes();
+        //LoadHeroes();
+        SetTroopAtPosition(0, 1, knight);
+
 
     }
+
+    public void SetTroopAtPosition(int x,int y,Sprite sprite,bool flipX = true)
+    {
+        cellsGame[x, y].troop = new GameObject("Troop", typeof(SpriteRenderer));
+        SpriteRenderer troopRenderer = cellsGame[0, 1].troop.GetComponent<SpriteRenderer>();
+        troopRenderer.sprite = knight;
+        troopRenderer.flipX = flipX;
+        cellsGame[x, y].troop.transform.parent = cellsGame[0, 1].go.transform;
+        cellsGame[x, y].troop.transform.localPosition = new Vector3(0, 0, -1);
+        cellsGame[x, y].troop.transform.localScale = new Vector3(0.4f, 0.4f, 1);
+
+    }
+    public void ClearTroopAtPosition(int x,int y)
+    {
+        cellsGame[x, y].troop = null;
+        Destroy(cellsGame[x, y].go.transform.GetChild(0));
+    }
+
+    private void SwapCellTroop(Cell cell1,Cell cell2)
+    {
+        cell2.troop = cell1.troop;
+        cell2.troop.transform.parent = cell2.go.transform;
+        cell2.troop.transform.localPosition = new Vector3(0, 0, -1);
+        cell1.troop = null;
+        //Destroy(cell1.go.transform.GetChild(0));
+    }
+
+
 
     private Cell FindCell(GameObject obj)
     {
@@ -74,6 +107,7 @@ public class BattleController : MonoBehaviour
             spriteRenderer = cell.go.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = unselected;
         }
+        IsSpriteSelected = false;
 
     }
 
@@ -105,16 +139,37 @@ public class BattleController : MonoBehaviour
             if (hit.collider != null)
             {
                 Cell cell = FindCell(hit.collider.gameObject);
-                Debug.Log(cell.x + "-" + cell.y);
-                if (cell.selected == true || cell.walkable == false)
+                if (IsSpriteSelected == false)
                 {
-                    Debug.Log("selected");
-                    return;
+                    if(cell.troop == null)
+                    {
+                        return;
+                    }
+                    Debug.Log(cell.x + "-" + cell.y);
+                    if (cell.selected == true || cell.walkable == false)
+                    {
+                        Debug.Log("selected");
+
+                        return;
+                    }
+                    UnselectAllCells();
+                    spriteRenderer = cell.go.GetComponent<SpriteRenderer>();
+                    spriteRenderer.sprite = selected;
+                    cell.selected = true;
+                    LastSelectedCell = cell;
+                    IsSpriteSelected = true;
+                } else
+                {
+                    if(cell.selected == true)
+                    {
+                        UnselectAllCells();
+                        return;
+                    } else if (cell.troop == null)
+                    {
+                        SwapCellTroop(LastSelectedCell, cell);
+                        UnselectAllCells();
+                    }
                 }
-                UnselectAllCells();
-                spriteRenderer = cell.go.GetComponent<SpriteRenderer>();
-                spriteRenderer.sprite = selected;
-                cell.selected = true;
 
             }
         }
