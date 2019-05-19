@@ -15,6 +15,7 @@ public class Cell
     public Boolean selected { get; set; }
     public string troopName { get; set; } = "";
     public Boolean isPlayerTroop { get; set; } = false;
+    public int numberOfTroops { get; set; } = 0;
 
     public void Update()
     {

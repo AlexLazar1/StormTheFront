@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
-
+using UnityEngine.Experimental.UIElements;
 
 public class BattleController : MonoBehaviour
 {
     //public Board board;
     //public Tilemap m_level;
+    public GameObject troopPanel;
+    public Text troopInfo;
     public GameObject Board;
     public Sprite selected;
     public Sprite unselected;
@@ -76,32 +78,32 @@ public class BattleController : MonoBehaviour
         LoadHeroes();
         if(hero1.ArchersNo > 0)
         {
-            SetTroopAtPosition(0, 0, archerSprite,"Archer");
+            SetTroopAtPosition(0, 0, archerSprite,"Archer",hero1.ArchersNo);
 
         }
         if (hero1.KnightsNo > 0)
         {
-            SetTroopAtPosition(0, 1, knightSprite,"Knight");
+            SetTroopAtPosition(0, 1, knightSprite,"Knight",hero1.KnightsNo);
 
         }
         if (hero1.SoldiersNo > 0)
         {
-            SetTroopAtPosition(0, 2, soldierSprite,"Soldier");
+            SetTroopAtPosition(0, 2, soldierSprite,"Soldier",hero1.SoldiersNo);
         }
 
         if (hero2.ArchersNo > 0)
         {
-            SetTroopAtPosition(7, 1, archerSprite,"Archer",false,false);
+            SetTroopAtPosition(7, 1, archerSprite,"Archer",hero2.ArchersNo,false,false);
 
         }
         if (hero2.KnightsNo > 0)
         {
-            SetTroopAtPosition(7, 2, knightSprite,"Knight",false,false);
+            SetTroopAtPosition(7, 2, knightSprite,"Knight",hero2.KnightsNo,false,false);
 
         }
         if (hero2.SoldiersNo > 0)
         {
-            SetTroopAtPosition(7, 3, soldierSprite,"Soldier",false,false);
+            SetTroopAtPosition(7, 3, soldierSprite,"Soldier",hero2.SoldiersNo,false,false);
 
         }
 
@@ -111,7 +113,7 @@ public class BattleController : MonoBehaviour
 
     }
 
-    public void SetTroopAtPosition(int x,int y,Sprite sprite,string troopName,bool flipX = true,bool playerTroop = true)
+    public void SetTroopAtPosition(int x,int y,Sprite sprite,string troopName,int troopNumber,bool flipX = true,bool playerTroop = true)
     {
         cellsGame[x, y].troop = new GameObject("Troop", typeof(SpriteRenderer));
         SpriteRenderer troopRenderer = cellsGame[x, y].troop.GetComponent<SpriteRenderer>();
@@ -122,12 +124,14 @@ public class BattleController : MonoBehaviour
         cellsGame[x, y].troop.transform.localScale = new Vector3(40, 40, 1);
         cellsGame[x, y].troopName = troopName;
         cellsGame[x, y].isPlayerTroop = playerTroop;
+        cellsGame[x, y].numberOfTroops = troopNumber;
     }
     public void ClearTroopAtPosition(int x,int y)
     {
         cellsGame[x, y].troop = null;
         cellsGame[x, y].isPlayerTroop = false;
         cellsGame[x, y].troopName = "";
+        cellsGame[x, y].numberOfTroops = 0;
         Destroy(cellsGame[x, y].go.transform.GetChild(0));
     }
 
@@ -138,9 +142,11 @@ public class BattleController : MonoBehaviour
         cell2.troop.transform.localPosition = new Vector3(0, 0, -1);
         cell2.isPlayerTroop = cell1.isPlayerTroop;
         cell2.troopName = cell1.troopName;
+        cell2.numberOfTroops = cell1.numberOfTroops;
         cell1.troop = null;
         cell1.isPlayerTroop = false;
         cell1.troopName = "";
+        cell1.numberOfTroops = 0;
         //Destroy(cell1.go.transform.GetChild(0));
     }
 
@@ -289,6 +295,7 @@ public class BattleController : MonoBehaviour
             {
                 Cell cell = FindCell(hit.collider.gameObject);
                 Debug.Log(IsSpriteSelected);
+                troopPanel.SetActive(false);
                 if (IsSpriteSelected == false)
                 {
                   
@@ -296,10 +303,29 @@ public class BattleController : MonoBehaviour
                     {
                         return;
                     }
-                    if(cell.isPlayerTroop == false)
+                    switch (cell.troopName)
+                    {
+                        case "Archer":
+                            troopPanel.SetActive(true);
+                            troopInfo.text = "Archers \n" + "-" + cell.numberOfTroops + " Troops\n-" + Archer.HP + " HP \n-" + Archer.Attack + " Attack";
+                            break;
+
+                        case "Soldier":
+                            troopPanel.SetActive(true);
+                            troopInfo.text = "Soldiers \n" + "-" + cell.numberOfTroops + " Troops\n-" + Soldier.HP + " HP \n-" + Soldier.Attack + " Attack";
+                            break;
+
+                        case "Knight":
+                            troopPanel.SetActive(true);
+                            troopInfo.text = "Knights \n" + "-" + cell.numberOfTroops + " Troops\n-" + Knight.HP + " HP \n-" + Knight.Attack + " Attack";
+                            break;
+                    }
+
+                    if (cell.isPlayerTroop == false)
                     {
                         return;
                     }
+                    
                     UnselectAllCells();
                     spriteRenderer = cell.go.GetComponent<SpriteRenderer>();
                     spriteRenderer.sprite = selected;
