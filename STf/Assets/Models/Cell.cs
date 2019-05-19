@@ -13,6 +13,8 @@ public class Cell
     public GameObject go { get; set; }
     public GameObject troop { get; set; }
     public Boolean selected { get; set; }
+    public string troopName { get; set; } = "";
+    public Boolean isPlayerTroop { get; set; } = false;
 
     public void Update()
     {

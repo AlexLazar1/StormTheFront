@@ -6267,7 +6267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1719985278
 Transform:
   m_ObjectHideFlags: 0
@@ -7493,7 +7493,9 @@ MonoBehaviour:
   Board: {fileID: 0}
   selected: {fileID: 0}
   unselected: {fileID: 0}
-  knight: {fileID: 0}
+  soldierSprite: {fileID: 0}
+  knightSprite: {fileID: 0}
+  archerSprite: {fileID: 0}
   dialog: {fileID: 0}
 --- !u!1 &1988903433
 GameObject:
@@ -7785,7 +7787,9 @@ MonoBehaviour:
   Board: {fileID: 2104663057}
   selected: {fileID: 21300000, guid: 1b51f2120b2084bf1b3f74e70e7fabfd, type: 3}
   unselected: {fileID: 21300000, guid: ea376218f77624f37a58e7f116df98e1, type: 3}
-  knight: {fileID: 21300000, guid: 408f19a2772d844fd97e7e14d9ce143f, type: 3}
+  soldierSprite: {fileID: 21300000, guid: af1cb7daea53a4736a53efcb5e3d60fa, type: 3}
+  knightSprite: {fileID: 21300000, guid: 408f19a2772d844fd97e7e14d9ce143f, type: 3}
+  archerSprite: {fileID: 21300000, guid: 3da90ea2c95aa4342ab081081472afe4, type: 3}
   dialog: {fileID: 2130776857}
 --- !u!1 &2130776855
 GameObject:
