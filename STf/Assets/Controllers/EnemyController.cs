@@ -14,8 +14,8 @@ public class EnemyController : MonoBehaviour
             enemy = new Hero
             {
                 Name = "DeathRiser",
-                ArchersNo = 3,
-                SoldiersNo = 2,
+                ArchersNo = 4,
+                SoldiersNo = 6,
                 SiegeNo = 0,
                 KnightsNo = 1
             };
@@ -28,8 +28,8 @@ public class EnemyController : MonoBehaviour
             enemy = new Hero
             {
                 Name = "Knight of Doom",
-                ArchersNo = 1,
-                SoldiersNo = 1,
+                ArchersNo = 2,
+                SoldiersNo = 5,
                 SiegeNo = 0,
                 KnightsNo = 5
             };

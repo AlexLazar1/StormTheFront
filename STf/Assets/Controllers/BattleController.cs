@@ -28,6 +28,7 @@ public class BattleController : MonoBehaviour
     private Troop Knight = new Troop("Knight", 25, 3, 3);
     private Troop Soldier = new Troop("Soldier", 30, 2, 1);
     private List<Cell> movable = new List<Cell>();
+    private bool IsPlayerTurn = true;
 
 
 
@@ -78,32 +79,32 @@ public class BattleController : MonoBehaviour
         LoadHeroes();
         if(hero1.ArchersNo > 0)
         {
-            SetTroopAtPosition(0, 0, archerSprite,"Archer",hero1.ArchersNo);
+            SetTroopAtPosition(0, 0, archerSprite,"Archer",hero1.ArchersNo,Archer.Attack,Archer.HP);
 
         }
         if (hero1.KnightsNo > 0)
         {
-            SetTroopAtPosition(0, 1, knightSprite,"Knight",hero1.KnightsNo);
+            SetTroopAtPosition(0, 1, knightSprite,"Knight",hero1.KnightsNo,Knight.Attack,Knight.HP);
 
         }
         if (hero1.SoldiersNo > 0)
         {
-            SetTroopAtPosition(0, 2, soldierSprite,"Soldier",hero1.SoldiersNo);
+            SetTroopAtPosition(0, 2, soldierSprite,"Soldier",hero1.SoldiersNo,Soldier.Attack,Soldier.HP);
         }
 
         if (hero2.ArchersNo > 0)
         {
-            SetTroopAtPosition(7, 1, archerSprite,"Archer",hero2.ArchersNo,false,false);
+            SetTroopAtPosition(7, 1, archerSprite,"Archer",hero2.ArchersNo,Archer.Attack,Archer.HP,false,false);
 
         }
         if (hero2.KnightsNo > 0)
         {
-            SetTroopAtPosition(7, 2, knightSprite,"Knight",hero2.KnightsNo,false,false);
+            SetTroopAtPosition(7, 2, knightSprite,"Knight",hero2.KnightsNo,Knight.Attack,Knight.HP,false,false);
 
         }
         if (hero2.SoldiersNo > 0)
         {
-            SetTroopAtPosition(7, 3, soldierSprite,"Soldier",hero2.SoldiersNo,false,false);
+            SetTroopAtPosition(7, 3, soldierSprite,"Soldier",hero2.SoldiersNo,Soldier.Attack,Soldier.HP,false,false);
 
         }
 
@@ -113,7 +114,8 @@ public class BattleController : MonoBehaviour
 
     }
 
-    public void SetTroopAtPosition(int x,int y,Sprite sprite,string troopName,int troopNumber,bool flipX = true,bool playerTroop = true)
+    public void SetTroopAtPosition(int x,int y,Sprite sprite,string troopName,int troopNumber,
+        int troopAttack,int troopHP,bool flipX = true,bool playerTroop = true)
     {
         cellsGame[x, y].troop = new GameObject("Troop", typeof(SpriteRenderer));
         SpriteRenderer troopRenderer = cellsGame[x, y].troop.GetComponent<SpriteRenderer>();
@@ -125,14 +127,17 @@ public class BattleController : MonoBehaviour
         cellsGame[x, y].troopName = troopName;
         cellsGame[x, y].isPlayerTroop = playerTroop;
         cellsGame[x, y].numberOfTroops = troopNumber;
+        cellsGame[x, y].troopAttack = troopAttack;
+        cellsGame[x, y].troopHP = troopHP;
     }
     public void ClearTroopAtPosition(int x,int y)
     {
-        cellsGame[x, y].troop = null;
+        Destroy(cellsGame[x, y].troop);
         cellsGame[x, y].isPlayerTroop = false;
         cellsGame[x, y].troopName = "";
         cellsGame[x, y].numberOfTroops = 0;
-        Destroy(cellsGame[x, y].go.transform.GetChild(0));
+        cellsGame[x, y].troopHP = 0;
+        cellsGame[x, y].troopAttack = 0;
     }
 
     private void SwapCellTroop(Cell cell1,Cell cell2)
@@ -143,10 +148,14 @@ public class BattleController : MonoBehaviour
         cell2.isPlayerTroop = cell1.isPlayerTroop;
         cell2.troopName = cell1.troopName;
         cell2.numberOfTroops = cell1.numberOfTroops;
+        cell2.troopAttack = cell1.troopAttack;
+        cell2.troopHP = cell1.troopHP;
         cell1.troop = null;
         cell1.isPlayerTroop = false;
         cell1.troopName = "";
         cell1.numberOfTroops = 0;
+        cell1.troopHP = 0;
+        cell1.troopAttack = 0;
         //Destroy(cell1.go.transform.GetChild(0));
     }
 
@@ -224,7 +233,7 @@ public class BattleController : MonoBehaviour
                 }
                 if(isPlayerTurn && cellsGame[x, y].isPlayerTroop == false)
                 {
-                    return false;
+                    return true;
                 }
                 if(!isPlayerTurn && cellsGame[x,y].isPlayerTroop == true)
                 {
@@ -341,7 +350,7 @@ public class BattleController : MonoBehaviour
                     }
                 } else
                 {
-                   
+                    
                     if(cell.selected == true)
                     {
                         UnselectAllCells();
@@ -355,13 +364,43 @@ public class BattleController : MonoBehaviour
                     {
                         SwapCellTroop(LastSelectedCell, cell);
                         UnselectAllCells();
+                    } else
+                    {
+                        int remainingHP = 0;
+                        remainingHP = cell.troopHP * cell.numberOfTroops - LastSelectedCell.troopAttack * LastSelectedCell.numberOfTroops;
+                        cell.numberOfTroops = remainingHP / cell.troopHP;
+                        Debug.Log(cell.numberOfTroops);
+                        if (cell.numberOfTroops < 1)
+                        {
+                            ClearTroopAtPosition(cell.x, cell.y);
+                        }
+                        if (LastSelectedCell.troopName != "Archer")
+                        {
+                            remainingHP = LastSelectedCell.numberOfTroops * LastSelectedCell.troopHP - cell.numberOfTroops * cell.troopAttack;
+                            LastSelectedCell.numberOfTroops = remainingHP / LastSelectedCell.troopHP;
+                            if (LastSelectedCell.numberOfTroops < 1)
+                            {
+                                ClearTroopAtPosition(LastSelectedCell.x, LastSelectedCell.y);
+                            }
+                        }
+                        UnselectAllCells();
+
                     }
+                    IsPlayerTurn = false;
+                    EnemyTurn();
                 }
 
             }
         }
     }
-    
+
+
+    public void EnemyTurn()
+    {
+        /* Todo : Logic for Enemy Turn*/
+        IsPlayerTurn = true;
+
+    }
 
 
     private bool findInMovable(Cell cell)

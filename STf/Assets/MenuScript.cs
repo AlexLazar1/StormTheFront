@@ -30,9 +30,9 @@ public class MenuScript : MonoBehaviour
         Hero player = new Hero
         {
             Name = pName,
-            ArchersNo = 5,
-            SoldiersNo = 5,
-            KnightsNo = 5,
+            ArchersNo = 3,
+            SoldiersNo = 10,
+            KnightsNo = 2,
             SiegeNo = 5
         };
         int id = player.SaveInDb();

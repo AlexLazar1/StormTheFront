@@ -16,6 +16,8 @@ public class Cell
     public string troopName { get; set; } = "";
     public Boolean isPlayerTroop { get; set; } = false;
     public int numberOfTroops { get; set; } = 0;
+    public int troopHP { get; set; } = 0;
+    public int troopAttack { get; set; } = 0;
 
     public void Update()
     {
