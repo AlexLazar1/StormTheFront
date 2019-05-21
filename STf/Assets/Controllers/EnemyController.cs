@@ -24,7 +24,6 @@ public class EnemyController : MonoBehaviour
         }
         if(enemyNumber == 2)
         {
-            Global.Enemy = enemy;
             enemy = new Hero
             {
                 Name = "Knight of Doom",
@@ -33,6 +32,7 @@ public class EnemyController : MonoBehaviour
                 SiegeNo = 0,
                 KnightsNo = 5
             };
+            Global.Enemy = enemy;
             SceneManager.LoadScene("BattleScene");
         }
     }
