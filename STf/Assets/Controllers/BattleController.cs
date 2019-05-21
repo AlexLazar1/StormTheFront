@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.Experimental.UIElements;
+using UnityEngine.SceneManagement;
 
 public class BattleController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class BattleController : MonoBehaviour
     public GameObject Board;
     public Sprite selected;
     public Sprite unselected;
+    public Sprite attacked;
     public Sprite soldierSprite;
     public Sprite knightSprite;
     public Sprite archerSprite;
@@ -57,6 +59,31 @@ public class BattleController : MonoBehaviour
                 walkable = true,
             };
             y++;
+        }
+        return cells;
+    }
+
+    private List<Cell> GetEnemyCells()
+    {
+        List<Cell> cells = new List<Cell>();
+        foreach(Cell cell in cellsGame)
+        {
+            if(cell.troop != null && cell.isPlayerTroop == false)
+            {
+                cells.Add(cell);
+            }
+        }
+        return cells;
+    }
+    private List<Cell> GetPlayerCells()
+    {
+        List<Cell> cells = new List<Cell>();
+        foreach (Cell cell in cellsGame)
+        {
+            if (cell.troop != null && cell.isPlayerTroop == true && cell.numberOfTroops >= 1)
+            {
+                cells.Add(cell);
+            }
         }
         return cells;
     }
@@ -289,13 +316,21 @@ public class BattleController : MonoBehaviour
     {
         dialog.text = "";
     }
-
+    void LoadScene()
+    {
+        SceneManager.LoadScene("MainSceneIG");
+    }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         { // if left button pressed...
+            if (!IsPlayerTurn)
+            {
+                return;
+            }
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
@@ -373,6 +408,16 @@ public class BattleController : MonoBehaviour
                         if (cell.numberOfTroops < 1)
                         {
                             ClearTroopAtPosition(cell.x, cell.y);
+                            if (GetPlayerCells().Count < 1)
+                            {
+                                dialog.text = "You died!";
+                                Invoke("LoadScene", 3.0f);
+                            }
+                            if (GetEnemyCells().Count < 1)
+                            {
+                                dialog.text = "You Won!";
+                                Invoke("LoadScene", 3.0f);
+                            }
                         }
                         if (LastSelectedCell.troopName != "Archer")
                         {
@@ -397,8 +442,96 @@ public class BattleController : MonoBehaviour
 
     public void EnemyTurn()
     {
-        /* Todo : Logic for Enemy Turn*/
-        IsPlayerTurn = true;
+
+        List<Cell> enemies = GetEnemyCells();
+        if(enemies.Count == 0)
+        {
+            dialog.text = "You won!";
+            Invoke("LoadScene", 3.0f);
+            return;
+        }
+        bool attack = false;
+        foreach(Cell cell in enemies)
+        {
+            List<Cell> movables = getMovableCells(cell, false);
+            foreach(Cell movable in movables)
+            {
+                if(movable.troop != null && movable.isPlayerTroop == true)
+                {
+                    if(cell.troopName == "Archer")
+                    {
+                        //Attack the troop no matter what
+                        attack = true;
+                        int remainingHP = movable.troopHP * movable.numberOfTroops - cell.troopAttack * cell.numberOfTroops;
+                        movable.numberOfTroops = remainingHP / movable.troopHP;
+                        if(movable.numberOfTroops < 1)
+                        {
+                            ClearTroopAtPosition(movable.x, movable.y);
+                        }
+                        movable.go.GetComponent<SpriteRenderer>().sprite = attacked;
+                        IsPlayerTurn = true;
+                        return;
+                    }
+                    //fear, attack only if not die or causing some good damage
+                    if(cell.troopHP * cell.numberOfTroops > movable.troopAttack * movable.numberOfTroops
+                        || cell.troopAttack * cell.troopHP >= (movable.troopHP * movable.numberOfTroops) / 2)
+                    {
+                        int remainingHP = movable.troopHP * movable.numberOfTroops - cell.troopAttack * cell.numberOfTroops;
+                        movable.numberOfTroops = remainingHP / movable.troopHP;
+                        bool enemylDied = false;
+                        bool playerDied = false;
+                        if (movable.numberOfTroops < 1)
+                        {
+                            ClearTroopAtPosition(movable.x, movable.y);
+                            playerDied = true;
+                        }
+
+                        remainingHP = cell.troopHP * cell.numberOfTroops - movable.troopAttack*movable.numberOfTroops;
+                        cell.numberOfTroops = remainingHP / cell.troopHP;
+                        if(cell.numberOfTroops < 1)
+                        {
+                            ClearTroopAtPosition(cell.x, cell.y);
+                            enemylDied = true;
+                        }
+                        if(playerDied && !enemylDied)
+                        {
+                            SwapCellTroop(cell, movable);
+                        }
+                        movable.go.GetComponent<SpriteRenderer>().sprite = attacked;
+                        IsPlayerTurn = true;
+                        return;
+                    }
+                    if(GetPlayerCells().Count < 1)
+                    {
+                        dialog.text = "You died!";
+                        Invoke("LoadScene", 3.0f);
+                    }
+                }
+            }
+        }
+
+        int tries = 0;
+        while (true)
+        {
+            if(tries == 5)
+            {
+                //maybe he is blocked?
+                IsPlayerTurn = true;
+                return;
+            }
+            tries++;
+            Cell troopToMove = enemies[Random.Range(0, enemies.Count)];
+            foreach (Cell movable in getMovableCells(troopToMove,false))
+            {
+                if(movable.x <= troopToMove.x)
+                {
+                    SwapCellTroop(troopToMove, movable);
+                    IsPlayerTurn = true;
+                    return;
+                }
+            }
+        }
+
 
     }
 

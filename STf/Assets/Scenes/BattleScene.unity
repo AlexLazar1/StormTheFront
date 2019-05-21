@@ -7656,6 +7656,7 @@ MonoBehaviour:
   Board: {fileID: 0}
   selected: {fileID: 0}
   unselected: {fileID: 0}
+  attacked: {fileID: 0}
   soldierSprite: {fileID: 0}
   knightSprite: {fileID: 0}
   archerSprite: {fileID: 0}
@@ -7952,6 +7953,7 @@ MonoBehaviour:
   Board: {fileID: 2104663057}
   selected: {fileID: 21300000, guid: 1b51f2120b2084bf1b3f74e70e7fabfd, type: 3}
   unselected: {fileID: 21300000, guid: ea376218f77624f37a58e7f116df98e1, type: 3}
+  attacked: {fileID: 21300000, guid: a4dd90a26aad9466d837e4659c460240, type: 3}
   soldierSprite: {fileID: 21300000, guid: af1cb7daea53a4736a53efcb5e3d60fa, type: 3}
   knightSprite: {fileID: 21300000, guid: 408f19a2772d844fd97e7e14d9ce143f, type: 3}
   archerSprite: {fileID: 21300000, guid: 3da90ea2c95aa4342ab081081472afe4, type: 3}
