@@ -1,3 +1,3 @@
 # StormTheFront
 
-RTS game madde in Unity
+Turn based strategy game made in Unity. 
